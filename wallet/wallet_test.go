@@ -16,7 +16,11 @@ type StubStore struct {
 	err     error
 }
 
-func (s StubStore) Wallets(string) ([]Wallet, error) {
+func (s StubStore) Wallets() ([]Wallet, error) {
+	return s.wallets, s.err
+}
+
+func (s StubStore) WalletsByType(string) ([]Wallet, error) {
 	return s.wallets, s.err
 }
 
@@ -32,7 +36,7 @@ func TestWallets(t *testing.T) {
 		stubError := StubStore{err: echo.ErrInternalServerError}
 		s := New(stubError)
 		// Call the WalletHandler function
-		s.WalletHandler(context)
+		s.WalletsHandler(context)
 		// Check the status code of the response
 		if record.Code != http.StatusInternalServerError {
 			t.Errorf("expected status code %d but got %d", http.StatusInternalServerError, record.Code)
@@ -72,7 +76,7 @@ func TestWallets(t *testing.T) {
 		}
 		s := New(stubStore)
 		// Call the WalletHandler function
-		err := s.WalletHandler(context)
+		err := s.WalletsHandler(context)
 		// Check if an error occurred
 		if err != nil {
 			t.Errorf("unexpected error: %v", err)

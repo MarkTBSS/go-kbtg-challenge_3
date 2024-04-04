@@ -21,6 +21,7 @@ func main() {
 	echoInstance := echo.New()
 	echoInstance.GET("/swagger/*", echoSwagger.WrapHandler)
 	handler := wallet.New(databaseInstance)
-	echoInstance.GET("/api/v1/wallets", handler.WalletHandler)
+	echoInstance.GET("/api/v1/wallets", handler.WalletsHandler)
+	echoInstance.GET("/api/v1/wallets/type", handler.WalletsByTypeHandler)
 	echoInstance.Logger.Fatal(echoInstance.Start(":1323"))
 }
