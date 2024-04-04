@@ -16,20 +16,8 @@ type StubStore struct {
 	err     error
 }
 
-func (s StubStore) Wallets() ([]Wallet, error) {
+func (s StubStore) Wallets(string) ([]Wallet, error) {
 	return s.wallets, s.err
-}
-
-func (s StubStore) GetByType(walletType string) ([]Wallet, error) {
-	// Implement GetByType method for StubStore
-	// For testing purposes, you can return a list of wallets filtered by walletType
-	var filteredWallets []Wallet
-	for _, w := range s.wallets {
-		if w.WalletType == walletType {
-			filteredWallets = append(filteredWallets, w)
-		}
-	}
-	return filteredWallets, nil
 }
 
 func TestWallets(t *testing.T) {
